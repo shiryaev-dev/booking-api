@@ -1,6 +1,6 @@
 import { Schema, Prop, SchemaFactory } from '@nestjs/mongoose';
-import { HydratedDocument, Schema as MSchema, Document } from 'mongoose';
-import { Room } from 'src/room/room.model';
+import { HydratedDocument, Types, Document } from 'mongoose';
+import { Room } from '../room/room.model';
 
 export type ScheduleDocument = HydratedDocument<Schedule>;
 
@@ -9,8 +9,8 @@ export class Schedule extends Document {
     @Prop()
     date: Date;
 
-    @Prop({ type: MSchema.Types.ObjectId, ref: Room.name })
-    roomId: Room;
+    @Prop({ type: Types.ObjectId, ref: Room.name })
+    roomId: string;
 }
 
 export const ScheduleSchema = SchemaFactory.createForClass(Schedule);

@@ -1,4 +1,4 @@
-import { Controller, Post, Body, Get, Patch, Delete, Param, NotFoundException } from '@nestjs/common';
+import { Controller, Post, Body, Get, Patch, Delete, Param, NotFoundException, UsePipes, ValidationPipe } from '@nestjs/common';
 import { CreateRoomDto } from './dto/create-room.dto';
 import { RoomService } from './room.service';
 import { ROOM_NOT_FOUND } from './room.constants';
@@ -7,6 +7,7 @@ import { ROOM_NOT_FOUND } from './room.constants';
 export class RoomController {
     constructor(private readonly roomService: RoomService) {}
 
+    @UsePipes(new ValidationPipe())
     @Post('create')
     async create(@Body() dto: CreateRoomDto) {
         return this.roomService.create(dto);
@@ -33,6 +34,7 @@ export class RoomController {
         return this.roomService.findAll;
     }
 
+    @UsePipes(new ValidationPipe())
     @Patch(':id')
     async update(@Param() id: string, @Body() dto: CreateRoomDto) {
         const updateRoom = this.roomService.updateById(id, dto);

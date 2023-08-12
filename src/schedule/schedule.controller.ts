@@ -13,38 +13,17 @@ export class ScheduleController {
         return this.scheduleService.create(dto);
     }
 
-    @Get()
-    async getAll() {
-        return this.scheduleService.findAll();
+    @Get('booking/:id')
+    async findBooking(@Param() id: string, dto: { dateFrom: string; dateTo: string }) {
+        return this.scheduleService.findBooking(id, dto);
     }
 
-    @Get(':id')
-    async getById(@Param('id') id: string) {
-        const schedule = this.scheduleService.findById(id);
+    @Patch(':id')
+    async cancel(@Param(':id') id: string) {
+        const canceledSchedule = this.scheduleService.cancelBooking(id);
 
-        if (!schedule) {
+        if (!canceledSchedule) {
             throw new NotFoundException(SCHEDULE_NOT_FOUND);
         }
-        return schedule;
-    }
-
-    @Delete(':id')
-    async delete(@Param(':id') id: string) {
-        const deletedSchedule = this.scheduleService.deleteById(id);
-
-        if (!deletedSchedule) {
-            throw new NotFoundException(SCHEDULE_NOT_FOUND);
-        }
-    }
-
-    @UsePipes(new ValidationPipe())
-    @Patch('id')
-    async update(@Param(':id') id: string, @Body() dto: CreateScheduleDto) {
-        const updatedSchedule = this.scheduleService.updateById(id, dto);
-
-        if (!updatedSchedule) {
-            throw new NotFoundException(SCHEDULE_NOT_FOUND);
-        }
-        return updatedSchedule;
     }
 }

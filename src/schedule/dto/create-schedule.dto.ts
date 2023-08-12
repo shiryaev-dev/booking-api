@@ -1,9 +1,15 @@
-import { IsDateString, IsString } from 'class-validator';
+import { IsDateString, IsString, IsBoolean } from 'class-validator';
 
 export class CreateScheduleDto {
     @IsDateString()
-    date: Date;
+    dateFrom: string;
+
+    @IsDateString()
+    dateTo: string;
 
     @IsString()
     roomId: string;
+
+    @IsBoolean()
+    isCanceled?: boolean;
 }

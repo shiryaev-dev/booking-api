@@ -27,11 +27,12 @@ export class RoomController {
         if (!room) {
             throw new NotFoundException(ROOM_NOT_FOUND);
         }
+        return room;
     }
 
     @Get()
     async getAll() {
-        return this.roomService.findAll;
+        return this.roomService.findAll();
     }
 
     @UsePipes(new ValidationPipe())

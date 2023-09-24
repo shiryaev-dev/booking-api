@@ -4,6 +4,8 @@ import { RoomModule } from './room/room.module';
 import { MongooseModule } from '@nestjs/mongoose';
 import { ConfigService, ConfigModule } from '@nestjs/config';
 import { getMongoConfig } from './configs/mongo.config';
+import { UserModule } from './user/user.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
     imports: [
@@ -11,6 +13,8 @@ import { getMongoConfig } from './configs/mongo.config';
         MongooseModule.forRootAsync({ imports: [ConfigModule], inject: [ConfigService], useFactory: getMongoConfig }),
         ScheduleModule,
         RoomModule,
+        UserModule,
+        AuthModule,
     ],
 })
 export class AppModule {}

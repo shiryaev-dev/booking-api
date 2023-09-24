@@ -1,13 +1,20 @@
-import { Controller, Post, Body, Get, Patch, Delete, Param, NotFoundException, UsePipes, ValidationPipe } from '@nestjs/common';
+import { Controller, Post, Body, Get, Patch, Delete, Param, NotFoundException, UsePipes, ValidationPipe, UseGuards } from '@nestjs/common';
 import { CreateRoomDto } from './dto/create-room.dto';
 import { RoomService } from './room.service';
 import { ROOM_NOT_FOUND } from './room.constants';
+import { Roles } from 'src/common/decorators/roles.decorators';
+import { UserRole } from 'src/user/user.types';
+import { RolesGuard } from 'src/auth/guards/roles.guard';
+import { JwtAuthGuard } from 'src/auth/guards/jwt.guard';
 
 @Controller('room')
 export class RoomController {
     constructor(private readonly roomService: RoomService) {}
 
     @UsePipes(new ValidationPipe())
+    @Roles(UserRole.ADMIN)
+    @UseGuards(JwtAuthGuard)
+    @UseGuards(RolesGuard)
     @Post('create')
     async create(@Body() dto: CreateRoomDto) {
         return this.roomService.create(dto);
@@ -44,4 +51,9 @@ export class RoomController {
         }
         return updateRoom;
     }
+
+    @Get('statistics/:month')
+	async getStatisticsByMonth(@Param('month') month: string) {
+		return await this.roomService.getStatisticsByMonth(month);
+	}
 }

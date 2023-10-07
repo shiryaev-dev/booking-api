@@ -13,8 +13,7 @@ export class RoomController {
 
     @UsePipes(new ValidationPipe())
     @Roles(UserRole.ADMIN)
-    @UseGuards(JwtAuthGuard)
-    @UseGuards(RolesGuard)
+    @UseGuards(JwtAuthGuard, RolesGuard)
     @Post('create')
     async create(@Body() dto: CreateRoomDto) {
         return this.roomService.create(dto);

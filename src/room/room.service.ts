@@ -4,7 +4,7 @@ import { Room, RoomDocument } from './room.model';
 import { Model, Document } from 'mongoose';
 import { ICreateRoom } from './types/create-room.interface';
 import { IUpdateRoom } from './types/update-room.interface';
-import { Schedule } from 'src/schedule/schedule.model';
+import { Schedule } from '../schedule/schedule.model';
 
 @Injectable()
 export class RoomService {
@@ -62,6 +62,6 @@ export class RoomService {
                     },
                 },
             ])
-            .exec() as Promise<(Room & { schedules: Schedule[]; schedulesCount: number })[]>;
+            .exec();
     }
 }

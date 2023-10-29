@@ -1,13 +1,28 @@
 version: '3.1'
 
 services:
+    top-api:
+        build:
+            context: .
+            dockerfile: Dockerfile
+        image: top-api:latest
+        container_name: top-api
+        restart: always
+        ports:
+            - 3000:3000
+        volumes:
+            - ./.env:/opt/app/.env
+        depends_on:
+            - mongo
+
     mongo:
-        container_name: mongo
         image: mongo
+        container_name: mongo
         environment:
             MONGO_INITDB_ROOT_USERNAME: admin
             MONGO_INITDB_ROOT_PASSWORD: root
+        restart: always
+        ports:
+            - 27017:27017
         volumes:
             - ./mongo-data:/data/mongo
-        ports:
-            - '27017:27017'

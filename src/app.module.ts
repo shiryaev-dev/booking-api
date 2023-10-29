@@ -6,6 +6,7 @@ import { ConfigService, ConfigModule } from '@nestjs/config';
 import { getMongoConfig } from './configs/mongo.config';
 import { UserModule } from './user/user.module';
 import { AuthModule } from './auth/auth.module';
+import { FilesModule } from './files/files.module';
 
 @Module({
     imports: [
@@ -15,6 +16,7 @@ import { AuthModule } from './auth/auth.module';
         RoomModule,
         UserModule,
         AuthModule,
+        FilesModule,
     ],
 })
 export class AppModule {}
